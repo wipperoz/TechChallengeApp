@@ -1,6 +1,6 @@
 "DbUser" = "postgres"
 "DbPassword" = "$wip4500$"
-"DbName" = "techChallenge"
+"DbName" = "TheNewChallenge"
 "DbPort" = "5432"
 "DbHost" = "techchallenge.ceqcszpz5onw.us-east-1.rds.amazonaws.com"
 "ListenHost" = "localhost"
