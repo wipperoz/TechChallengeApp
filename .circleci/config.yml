@@ -33,8 +33,7 @@ jobs:
             ls
             ./TechChallengeApp --version | sed -e 's/TechChallengeApp version /v./' > versionfile
 
-
-      - run: 
+      - run:
           name: Build for linux
           environment:
             GOOS: linux
@@ -43,23 +42,23 @@ jobs:
             if [ -d "dist" ]; then
               rm -rf dist
             fi
-            
+
             mkdir -p dist
-            
+
             go build -ldflags="-s -w" -a -v -o TechChallengeApp .
-            
+
             cp TechChallengeApp dist/
             cp -r assets dist/
             cp conf.toml dist/
-            
+
             rm TechChallengeApp
 
             export version=$(cat versionfile)
-            
+
             zip -r "output/TechChallengeApp_${version}_linux64.zip" dist/*
 
       # build for macos
-      - run: 
+      - run:
           name: Build for macOS
           environment:
             GOOS: darwin
@@ -68,15 +67,15 @@ jobs:
             if [ -d "dist" ]; then
               rm -rf dist
             fi
-            
+
             mkdir -p dist
-            
+
             go build -ldflags="-s -w" -a -v -o TechChallengeApp .
-            
+
             cp TechChallengeApp dist/
             cp -r assets dist/
             cp conf.toml dist/
-            
+
             rm TechChallengeApp
 
             export version=$(cat versionfile)
@@ -84,12 +83,12 @@ jobs:
             zip -r "output/TechChallengeApp_${version}_darwin.zip" dist/*
 
       # build windows 64 bit
-      - run: 
+      - run:
           name: Build Windows 64bit
           environment:
             GOOS: windows
             GOARCH: amd64
-          command: | 
+          command: |
             # cross compile to windows in linux requires a few extra bits
             # this gets around permission issues
             sudo chmod -R 0777 /usr/local/go/
@@ -97,15 +96,15 @@ jobs:
             if [ -d "dist" ]; then
               rm -rf dist
             fi
-            
+
             mkdir -p dist
-            
+
             go build -ldflags="-s -w" -a -v -o TechChallengeApp.exe .
-            
+
             cp TechChallengeApp.exe dist/
             cp -r assets dist/
             cp conf.toml dist/
-            
+
             rm TechChallengeApp.exe
 
             export version=$(cat versionfile)
@@ -113,7 +112,7 @@ jobs:
             zip -r "output/TechChallengeApp_${version}_win64.zip" dist/*
 
       #build windows 32 bit
-      - run: 
+      - run:
           name: Build Windows 32bit
           environment:
             GOOS: windows
@@ -122,15 +121,15 @@ jobs:
             if [ -d "dist" ]; then
               rm -rf dist
             fi
-            
+
             mkdir -p dist
-            
+
             go build -ldflags="-s -w" -a -v -o TechChallengeApp.exe .
-            
+
             cp TechChallengeApp.exe dist/
             cp -r assets dist/
             cp conf.toml dist/
-            
+
             rm TechChallengeApp.exe
 
             export version=$(cat versionfile)
@@ -158,14 +157,14 @@ jobs:
 
       - store_artifacts:
           path: output
-          
+
 workflows:
   version: 2
   build_test_deploy:
     jobs:
       - build
       - deploy:
-          requires: 
+          requires:
             - build
           filters:
             branches:
